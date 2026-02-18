@@ -1,66 +1,56 @@
-## Foundry
+# ABI Encoder Demo
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Solidity smart contract demonstrating the use of `abi.encodePacked` across common DeFi encoding patterns. Built with [Foundry](https://book.getfoundry.sh/).
 
-Foundry consists of:
+## Overview
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The `ABIEncoderDemo` contract showcases how `abi.encodePacked` is used in real-world DeFi scenarios to produce compact byte representations and deterministic hashes for on-chain data structures.
 
-## Documentation
+### Encoding Functions
 
-https://book.getfoundry.sh/
+| Function | Description |
+|---|---|
+| `createPoolIdentifier` | Generates a unique pool ID from a token pair and fee (tokens are sorted to ensure order-invariance) |
+| `encodeTradingPosition` | Encodes a user's trading position with input/output tokens, amounts, and timestamp |
+| `encodeSwapData` | Packs a multi-hop swap path, amounts, and deadline into a single byte array |
+| `encodeLimitOrder` | Encodes a maker/taker limit order with a versioned tag (`LIMIT_ORDER_V1`) |
+| `encodeYieldPosition` | Creates an identifier for a yield farming position |
+| `encodeFlashLoanData` | Packs flash loan parameters including arbitrary callback data |
+| `encodeStakingPoolConfig` | Encodes staking pool configuration (reward rate, lock period, max stakers) |
+| `createUserMultiPoolHash` | Produces a unique hash for a user across multiple pools |
+| `encodeYieldStrategy` | Encodes a named yield strategy with pools and weights |
+| `encodeCrossChainBridgeData` | Packs cross-chain bridge transfer parameters |
+| `createDeFiTransactionId` | Generates a unique DeFi transaction identifier |
+| `encodeStopLossOrder` | Encodes a stop-loss order |
+| `encodeTakeProfitOrder` | Encodes a take-profit order |
+| `encodeTrailingStopOrder` | Encodes a trailing-stop order with activation price |
 
-## Usage
+## Prerequisites
 
-### Build
+- [Foundry](https://getfoundry.sh/)
 
-```shell
-$ forge build
+## Quick Start
+
+```bash
+# Install dependencies
+forge install
+
+# Build
+forge build
+
+# Run tests
+forge test -vvv
 ```
 
-### Test
+## Project Structure
 
-```shell
-$ forge test
+```
+src/
+  ABIEncoderDemo.sol    # Main contract with all encoding functions
+test/
+  ABIEncoderDemo.t.sol  # Tests covering pool IDs, trading positions, swap data, and reverts
 ```
 
-### Format
+## Author
 
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Andres Bustamante
